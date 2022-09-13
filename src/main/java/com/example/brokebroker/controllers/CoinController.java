@@ -23,11 +23,6 @@ public class CoinController {
         this.walletRepository = walletRepository;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<String> getX(){
-        return ResponseEntity.ok().body("Hello World");
-    }
-
     @GetMapping("/pairs")
     public ResponseEntity<List<ApiPair>> getAllPairs(){
         List<ApiPair> allPairs = new ArrayList<>();
