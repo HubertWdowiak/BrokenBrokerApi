@@ -26,4 +26,11 @@ public class Coin {
 
     public Coin() {
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Coin[id=%d, name='%s']",
+                id, apiName);
+    }
 }

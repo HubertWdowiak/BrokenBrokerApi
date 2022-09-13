@@ -35,4 +35,11 @@ public class Transaction {
     }
 
     protected Transaction() {}
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Transaction[id=%d, coinName='%s', coins='%s', price='%s']",
+                id, wallet.getCoin().apiName, coins, coinPrice);
+    }
 }

@@ -39,4 +39,11 @@ public class Wallet {
         this.transactions = new ArrayList<>();
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Wallet[id=%d, balance='%s', owner='%s', coinName='%s']",
+                id, balance, owner.getLogin(), coin.apiName);
+    }
 }
