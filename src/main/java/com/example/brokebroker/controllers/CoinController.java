@@ -17,16 +17,24 @@ import java.util.List;
 public class CoinController {
     private final CoinService coinService;
     private final WalletRepository walletRepository;
+    private final HttpHeaders responseHeaders;
 
     public CoinController(CoinService coinService, WalletRepository walletRepository) {
         this.coinService = coinService;
         this.walletRepository = walletRepository;
+        this.responseHeaders = new HttpHeaders();
+        this.responseHeaders.add("Access-Control-Allow-Origin", "*");
+        this.responseHeaders.add("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+        this.responseHeaders.add("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Mode");
     }
 
+    /**
+     * Method allows to list all coins, their prices and user balance
+     */
     @GetMapping("/pairs")
     public ResponseEntity<List<ApiPair>> getAllPairs(){
         List<ApiPair> allPairs = new ArrayList<>();
-        for (Wallet wallet : walletRepository.findByOwnerId(1l)) {
+        for (Wallet wallet : walletRepository.findByOwnerId(1L)) { // TODO change id
             float balance = wallet.getBalance();
             ApiPair pair = new ApiPair(wallet.getCoin().getApiName(),
                     balance,
@@ -34,10 +42,6 @@ public class CoinController {
             allPairs.add(pair);
         }
         allPairs.sort(Comparator.comparing(ApiPair::getApiName));
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Access-Control-Allow-Origin", "*");
-        responseHeaders.add("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-        responseHeaders.add("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Mode");
         return ResponseEntity.ok().headers(responseHeaders).body(allPairs);
     }
 

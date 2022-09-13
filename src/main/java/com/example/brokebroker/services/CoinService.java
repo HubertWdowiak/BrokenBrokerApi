@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class CoinService {
 
-    private CoinRepository coinRepository;
+    private final CoinRepository coinRepository;
     private final RestTemplate restTemplate;
 
     public CoinService(RestTemplateBuilder restTemplateBuilder, CoinRepository coinRepository) {
@@ -22,6 +22,9 @@ public class CoinService {
         this.coinRepository = coinRepository;
     }
 
+    /**
+     * Method allows to fetch current market price of specific coin.
+     */
     public Double getUSDPrice(String coinApiName) {
         String url = "https://api.coinpaprika.com/v1/tickers/" + coinApiName;
         String json = this.restTemplate.getForObject(url, String.class);
@@ -35,6 +38,9 @@ public class CoinService {
         }
     }
 
+    /**
+     * Method allows to fetch current market price of all coins.
+     */
     public Map<String, Double> getAllPrices(){
         Map<String, Double> prices = new HashMap<>();
         for (Coin coin: coinRepository.findAll()) {

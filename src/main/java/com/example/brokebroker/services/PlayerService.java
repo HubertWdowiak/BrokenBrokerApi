@@ -26,6 +26,9 @@ public class PlayerService {
         this.walletRepository = walletRepository;
     }
 
+    /**
+     * Method allows to get user $ worth ranking
+     */
     public List<PlayerRankingApi> getUserRanking(){
         Map<String, Double> prices = coinService.getAllPrices();
         List<PlayerRankingApi> ranking = new ArrayList<>();
@@ -42,6 +45,9 @@ public class PlayerService {
         return ranking;
     }
 
+    /**
+     * Method allows to register new player and grant him starting assets.
+     */
     public void registerNewPlayer(String login, String password) {
         Player player = new Player(login, password);
         repository.save(player);
